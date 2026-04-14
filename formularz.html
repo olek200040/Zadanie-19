@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Rejestracja</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+        }
+        input {
+            display: block;
+            margin-bottom: 5px;
+            padding: 5px;
+            width: 250px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        button:disabled {
+            background: #ccc;
+        }
+</style>
+</head>
+<body>
+ 
+<h2>Formularz rejestracji</h2>
+ 
+<form>
+<label>Imię:</label>
+<input type="text" id="name">
+<div class="error" id="nameError"></div>
+ 
+    <label>Email:</label>
+<input type="text" id="email">
+<div class="error" id="emailError"></div>
+ 
+    <label>Hasło:</label>
+<input type="password" id="password">
+<div class="error" id="passwordError"></div>
+ 
+    <label>Potwierdź hasło:</label>
+<input type="password" id="confirmPassword">
+<div class="error" id="confirmPasswordError"></div>
+ 
+    <button type="submit" id="submitBtn" disabled>Zarejestruj</button>
+</form>
+ 
+<script>
+$(document).ready(function() {
+ 
+    function validate() {
+        let valid = true;
+ 
+        let name = $("#name").val();
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let confirmPassword = $("#confirmPassword").val();
+ 
+       
+        if (name === "") {
+            $("#nameError").text("Podaj imię");
+            valid = false;
+        } else {
+            $("#nameError").text("");
+        }
+ 
+    
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (email === "") {
+            $("#emailError").text("Podaj email");
+            valid = false;
+        } else if (!emailPattern.test(email)) {
+            $("#emailError").text("Niepoprawny email");
+            valid = false;
+        } else {
+            $("#emailError").text("");
+        }
+ 
+      
+        if (password === "") {
+            $("#passwordError").text("Podaj hasło");
+            valid = false;
+        } else if (password.length < 6) {
+            $("#passwordError").text("Min. 6 znaków");
+            valid = false;
+        } else {
+            $("#passwordError").text("");
+        }
+ 
+     
+        if (confirmPassword === "") {
+            $("#confirmPasswordError").text("Powtórz hasło");
+            valid = false;
+        } else if (confirmPassword !== password) {
+            $("#confirmPasswordError").text("Hasła się nie zgadzają");
+            valid = false;
+        } else {
+            $("#confirmPasswordError").text("");
+        }
+ 
+     
+        $("#submitBtn").prop("disabled", !valid);
+    }
+ 
+ 
+    $("input").on("keyup", function() {
+        validate();
+    });
+ 
+});
+</script>
+ 
+</body>
+</html>
